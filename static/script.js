@@ -19,8 +19,14 @@ $(document).ready(function(){
                     data.currentTemperature < parseFloat(desirableTemperature)-parseFloat(tolerance)){
                     audioElement.play();
                     console.log('playing sound');
+                    $("#current-temperature").addClass("label-danger").removeClass("label-success");
+                } else {
+                    $("#current-temperature").addClass("label-success").removeClass("label-danger");
                 }
             }
+        }).fail(function(){
+            $("#current-temperature").removeClass("label-danger").removeClass("label-success").addClass("label-default").text("Unknown");
+            audioElement.play();
         })
     }, 3000);
 });
