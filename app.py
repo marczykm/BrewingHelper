@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import render_template, url_for, jsonify
+from flask import render_template, url_for, jsonify, send_from_directory
 import random
 
 app = Flask(__name__)
@@ -17,6 +17,10 @@ def getCurrentTemperature():
 @app.route("/api/temperature/<float:temperature>")
 def addTemperature(temperature):
     return 'unimplemented'
+
+@app.route('/audio/<path:path>')
+def send_audio(path):
+    return send_from_directory('audio', path)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
