@@ -12,7 +12,8 @@ def index():
 
 @app.route("/api/temperature")
 def getCurrentTemperature():
-    return jsonify(currentTemperature="{0:.1f}".format(random.uniform(20.0, 30.0)))
+    return jsonify(currentTemperature=25.0)
+    # return jsonify(currentTemperature="{0:.1f}".format(random.uniform(20.0, 30.0)))
 
 @app.route("/api/temperature/<float:temperature>")
 def addTemperature(temperature):

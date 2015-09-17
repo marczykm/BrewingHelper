@@ -2,23 +2,24 @@ $(document).ready(function(){
 
     var audioElement = document.createElement('audio');
     audioElement.setAttribute('src', '/audio/alarm.mp3');
-    // audioElement.setAttribute('autoplay', 'false');
 
     $.get();
-
-    audioElement.addEventListener("load", function() {
-        // audioElement.play();
-    }, true);
 
     setInterval(function(){
         $.get("/api/temperature", function(data){
             $("#current-temperature").text(data.currentTemperature + String.fromCharCode(176) + "C");
             var desirableTemperature = $('#desirableTemperature').val();
-            console.log(desirableTemperature);
+            var tolerance = $('#tolerance').val();
+            if (tolerance == ''){
+                tolerance = 0;
+            }
 
-            if (desirableTemperature != '' && data.currentTemperature > desirableTemperature) {
-                audioElement.play();
-                console.log('plaing sound');
+            if (desirableTemperature != ''){
+                if (data.currentTemperature > parseFloat(desirableTemperature)+parseFloat(tolerance) || 
+                    data.currentTemperature < parseFloat(desirableTemperature)-parseFloat(tolerance)){
+                    audioElement.play();
+                    console.log('playing sound');
+                }
             }
         })
     }, 3000);
